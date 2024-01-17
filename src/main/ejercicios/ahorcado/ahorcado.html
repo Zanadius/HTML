@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ahorcado</title>
+    <style>
+        span {
+            display: inline-block;
+            width: 20px;
+            text-align: center;
+            border: 1px solid #ccc;
+            margin: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        var palabra = "calle";
+        var letrasAdivinadas = [];
+        var intentos = 5;
+
+        function inicializarJuego() {
+            palabra.split("").forEach(function () {
+                letrasAdivinadas.push(false);
+            });
+        }
+
+        function comprobacion1() {
+            var letraUsuario = document.getElementById("user_input").value.toLowerCase();
+
+            if (letraUsuario.length === 1 && letraUsuario.match(/[a-z]/i)) {
+                if (palabra.includes(letraUsuario)) {
+                    // La letra está en la palabra
+                    for (var i = 0; i < palabra.length; i++) {
+                        if (palabra[i] === letraUsuario) {
+                            letrasAdivinadas[i] = true;
+                        }
+                    }
+
+                    // Mostrar letras adivinadas
+                    mostrarLetrasAdivinadas();
+                } else {
+                    // La letra no está en la palabra
+                    decrementarIntento();
+                }
+            } else {
+                alert("Ingresa una letra válida.");
+            }
+        }
+
+        function mostrarLetrasAdivinadas() {
+            var letras = document.getElementById("letras");
+            letras.innerHTML = "";
+
+            for (var i = 0; i < palabra.length; i++) {
+                var letraMostrar = letrasAdivinadas[i] ? palabra[i] : "_";
+                var span = document.createElement("span");
+                span.textContent = letraMostrar;
+                letras.appendChild(span);
+            }
+
+            if (!letrasAdivinadas.includes(false)) {
+                // Todas las letras han sido adivinadas
+                var mensaje = document.getElementById("mensaje");
+                mensaje.innerText = "¡Felicidades! Has adivinado la palabra.";
+            } else {
+                var oportunidades = document.getElementById("oportunidades");
+                oportunidades.innerText = "Tienes " + intentos + " intentos";
+            }
+        }
+
+        function decrementarIntento() {
+            intentos--;
+
+            var oportunidades = document.getElementById("oportunidades");
+            oportunidades.innerText = "Tienes " + intentos + " intentos";
+
+            if (intentos === 0) {
+                var mensaje = document.getElementById("mensaje");
+                mensaje.innerText = "¡Agotaste tus intentos! La palabra era 'calle'.";
+            }
+        }
+
+        function reiniciar() {
+            intentos = 5;
+            letrasAdivinadas = [];
+            inicializarJuego();
+            mostrarLetrasAdivinadas();
+            var mensaje = document.getElementById("mensaje");
+            mensaje.innerText = "Bienvenido";
+            var oportunidades = document.getElementById("oportunidades");
+            oportunidades.innerText = "Tienes " + intentos + " intentos";
+        }
+
+        // Inicializar el juego al cargar la página
+        window.onload = function () {
+            inicializarJuego();
+            mostrarLetrasAdivinadas();
+        };
+    </script>
+</head>
+
+<body>
+    <h1>Ahorcado</h1>
+    <div id="letras"></div>
+    <br>
+    <form>
+        <label>Ingresa una letra </label><input id="user_input" type="text" maxlength="1">
+        <button type="button" onclick="comprobacion1()">Enviar</button>
+        <button type="button" onclick="reiniciar()">Reinicio</button>
+    </form>
+    <p id="mensaje">Bienvenido</p>
+    <p id="oportunidades">Tienes 5 intentos</p>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script>
+			let numero = "0";
+			let operacion = "";
+
+			$(document).ready(function () {
+				$("div > button").click(function () {
+					operacion = $("div > button").val();
+					alert(operacion)
+					numero = $("#numeroARecoger").val();
+					console.log("Numero: " + numero)
+
+					$("#numeroARecoger").val("");
+					$("#numeroARecoger").focus();
+				});
+
+				$(".botonCalcular").click(function () {
+					numero2 = $("#numeroARecoger").val();
+					console.log("numero2: " + numero2)
+					resultado =  numero + operacion + numero2
+					console.log(resultado)
+					$("#resultadoAMostrar").val(resultado);
+				});
+
+				$("#cuerpoCalculadora").click(function () {
+					$("body").css("background:red")
+				});
+			});
+
+
+
+		</script>
+	</head>
+
+	<body>
+		<div id="cuerpoCalculadora">
+			<form>
+				<b>CALCULADORA</b>
+				<fieldset>
+					<label>
+						Número
+					</label>
+					<input id="numeroARecoger" type="text" name="numero" autofocus></input>
+					<p>
+						Resultado &nbsp; &ensp;
+					</p>
+					<input id="resultadoAMostrar" type="number" name="resultado" readonly></input>
+					<div id="botoneraPrincipal">
+						<!-- <button onclick="operar()">Operar</button> -->
+						<button type="button" value="x">x</button>
+						<button type="button" value="+">+</button>
+						<button type="button" value="-">-</button>
+						<button type="button" value="/">/</button>
+					</div>
+					<div id="botonResultado" style="width: 100%;">
+						<a href="#"><img class="botonCalcular" src="./img/botonCalcular.png"></a>
+					</div>
+
+				</fieldset>
+			</form>
+		</div>
+	</body>
+
+</html>
